@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+# 未定義な変数があったら途中で終了する
+set -u
+
+e_newline() {
+    printf "\n"
+}
+
+e_header() {
+    printf "\033[37;1m%s\033[m\n" "$*"
+}
+
+e_error() {
+    printf "\033[31m%s\033[m\n" "✖ $*" 1>&2
+}
+
+e_warning() {
+    printf "\033[31m%s\033[m\n" "$*"
+}
+
+is_exists() {
+    which "$1" >/dev/null 2>&1
+    return $?
+}
+
+setup_ubuntu() {
+    if [[ ! -f /etc/os-release ]]; then
+        return 0
+    fi
+
+    sudo sed -i.bak -e "s%https?://[^ ]\+%https://ftp.udx.icscoe.jp/Linux/ubuntu/%g" /etc/apt/sources.list
+    sudo apt-get update
+}
+
+install_brew() {
+    if is_exists "brew" || [[ $(uname) != 'Darwin' ]] ; then
+        return 0
+    fi
+
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
+install() {
+    if is_exists $1 ; then
+        return 0
+    fi
+
+    case "$(uname)" in
+        *'Linux'*)
+            if [[ -f /etc/os-release ]]; then
+                sudo apt-get install -y $1
+            fi
+            ;;
+        *'Darwin'*)
+            install_brew
+            brew install $1
+            ;;
+        *)
+            e_error "このOSでは使えません"
+            exit 1
+            ;;
+    esac
+}
+
+# ---------
+# install
+# ---------
+setup_ubuntu
+
+install "git"
+
+# clone dotfiles
+REPO=github.com/kojisano/dotfiles
+DOTPATH=${DOTPATH:-$HOME/Project/$REPO}
+
+e_newline
+e_header "Downloading dotfiles repos..."
+git clone --recursive "https://$REPO" "$DOTPATH"
+
+$DOTPATH/setup.sh

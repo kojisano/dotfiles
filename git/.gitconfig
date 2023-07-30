@@ -1,0 +1,11 @@
+[user]
+	name = SANO Koji
+	email = koji.sano@gmail.com
+[core]
+	autocrlf = input
+	excludesfile = /Users/koji/.gitignore_global
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
