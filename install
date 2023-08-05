@@ -43,13 +43,15 @@ install_brew() {
 
 install() {
     if is_exists $1 ; then
+        e_warning "$1 is already installed."
         return 0
     fi
 
     case "$(uname)" in
         *'Linux'*)
             if [[ -f /etc/os-release ]]; then
-                sudo apt-get install -y $1
+                which yum && { echo "CentOS/RHEL/OracleLinux/etc"; sudo yum update -y && sudo yum install -y $1; return; }
+                which apt-get && { echo "Debian/Ubuntu"; sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y $1; return; }
             fi
             ;;
         *'Darwin'*)
@@ -66,8 +68,9 @@ install() {
 # ---------
 # install
 # ---------
-setup_ubuntu
+#setup_ubuntu
 
+e_header "Install git..."
 install "git"
 
 # clone dotfiles

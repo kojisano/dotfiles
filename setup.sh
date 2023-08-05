@@ -9,16 +9,19 @@ BASEDIR=$(dirname $0)
 cd $BASEDIR
 
 ./utils.sh
+os_info=$(get_os_info)
 
 e_newline
-case "$(uname)" in
-    *'Linux'*)
-        if [[ -f /etc/os-release ]]; then
-            e_header "Setup Ubuntu"
-            ./setup_ubuntu.sh
-        fi
+case ${os_info[0]} in
+    ubuntu)
+        e_header "Setup Ubuntu"
+        ./setup_ubuntu.sh
         ;;
-    *'Darwin'*)
+    debian)
+        e_header "Setup Debian"
+        ./setup_ubuntu.sh
+        ;;
+    macos)
         e_header "Setup Homebrew packages"
         ./setup_homebrew.sh
         ;;
