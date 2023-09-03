@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-BASEDIR=$(dirname $0)
+BASEDIR=$(cd $(dirname $0) && pwd)
 cd $BASEDIR
 
 # add submodule
@@ -13,12 +13,12 @@ for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
 done
 
 # symlink dotfiles
-ln -sf ~/dotfiles/.zprezto ~/.zprezto
-ln -sf ~/dotfiles/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/.zpreztorc ~/.zpreztorc
+ln -sf $BASEDIR/.zprezto ~/.zprezto
+ln -sf $BASEDIR/zprezto/zshrc ~/.zshrc
+ln -sf $BASEDIR/zprezto/zpreztorc ~/.zpreztorc
 
 # change shell
 chsh -s $(which zsh)
 
-source ~/dotfiles/.zshrc
-source ~/dotfiles/.zpreztorc
+source ~/.zshrc
+source ~/.zpreztorc
