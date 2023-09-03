@@ -54,6 +54,7 @@ formulas=(
     tmux
     nvm
     htop
+    direnv
 )
 
 echo "start apt-get install apps..."

@@ -5,23 +5,23 @@ set -u
 
 # 今のディレクトリ
 # dotfilesディレクトリに移動する
-BASEDIR=$(dirname $0)
+BASEDIR=$(cd $(dirname $0) && pwd)
 cd $BASEDIR
 
-./utils.sh
+source ./utils.sh
+get_os_info
 os_info=$(get_os_info)
-
 e_newline
 case ${os_info[0]} in
-    ubuntu)
+    *'ubuntu'*)
         e_header "Setup Ubuntu"
         ./setup_ubuntu.sh
         ;;
-    debian)
+    *'debian'*)
         e_header "Setup Debian"
         ./setup_ubuntu.sh
         ;;
-    macos)
+    *'macos'*)
         e_header "Setup Homebrew packages"
         ./setup_homebrew.sh
         ;;
@@ -43,10 +43,11 @@ esac
 
 e_newline
 e_header "Setup dotfiles"
-ln -sf ./tmux/.tmux.conf ~/.tmux.conf
-ln -sf ./git/.gitconfig ~/.gitconfig
-ln -sf ./git/.gitignore_global ~/.gitignore_global
+echo $BASEDIR
+ln -sf $BASEDIR/tmux/.tmux.conf ~/.tmux.conf
+ln -sf $BASEDIR/git/.gitconfig ~/.gitconfig
+ln -sf $BASEDIR/git/.gitignore_global ~/.gitignore_global
 
 e_newline
 e_header "Setup zprezto"
-./setup_zprezto.zsh
+$BASEDIR/setup_zprezto.zsh
