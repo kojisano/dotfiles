@@ -14,7 +14,7 @@ setup_ubuntu() {
 formulas=(
     gcc
     wget
-    curl
+    # curl
     # tree
     # openssl
     # colordiff
