@@ -17,6 +17,9 @@ ln -sf $BASEDIR/.zprezto ~/.zprezto
 ln -sf $BASEDIR/zprezto/zshrc ~/.zshrc
 ln -sf $BASEDIR/zprezto/zpreztorc ~/.zpreztorc
 
+# add completion
+curl -o $BASEDIR/.zprezto/modules/completion/external/src/_docker https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker
+
 # change shell
 chsh -s $(which zsh)
 
