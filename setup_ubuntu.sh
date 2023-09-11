@@ -30,7 +30,7 @@ formulas=(
     # sqlite
     # yarn
     # nodebrew
-    python3
+    # python3
     # lua
     # "vim --with-lua"
     # rbenv
@@ -61,5 +61,7 @@ echo "start apt-get install apps..."
 for formula in "${formulas[@]}"; do
   sudo apt-get -y install $formula
 done
+
+curl -sSf https://rye-up.com/get | bash
 
 exit 0

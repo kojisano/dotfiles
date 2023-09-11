@@ -17,7 +17,7 @@ echo "ok. run brew upgrade..."
 which brew >/dev/null 2>&1 && brew upgrade
 
 formulas=(
-    git
+    # git
     wget
     curl
     # tree
@@ -35,7 +35,7 @@ formulas=(
     # sqlite
     # yarn
     # nodebrew
-    python3
+    # python3
     # lua
     # "vim --with-lua"
     # rbenv

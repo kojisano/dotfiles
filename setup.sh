@@ -22,8 +22,9 @@ case ${os_info[0]} in
         ./setup_ubuntu.sh
         ;;
     *'macos'*)
-        e_header "Setup Homebrew packages"
+        e_header "Setup MacOS packages"
         ./setup_homebrew.sh
+        ./setup_macos.sh
         ;;
     *)
         e_error "このOSでは使えません"
